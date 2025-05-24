@@ -3,47 +3,44 @@ class Solution {
         return evaluate(s.toCharArray(), new int[]{0});
     }
 
-    private int evaluate(char[] chars, int[] index) {
-        Stack<Integer> stack = new Stack<>();
+    private int evaluate(char[] chars, int[] index){
+        Stack<Integer> st = new Stack<>();
         int num = 0;
         char sign = '+';
 
-        while (index[0] < chars.length) {
+        while(index[0] < chars.length){
             char ch = chars[index[0]];
 
-            if (Character.isDigit(ch)) {
+            if(Character.isDigit(ch)){
                 num = num * 10 + (ch - '0');
             }
 
-            if (ch == '(') {
-                index[0]++; // skip '('
-                num = evaluate(chars, index); // recursively evaluate the expression in parentheses
+            if(ch == '('){
+                index[0]++;
+                num  = evaluate(chars, index);
             }
-
-            // Check for operator or end of expression
-            if ((!Character.isDigit(ch) && ch != ' ' && ch != '(') || index[0] == chars.length - 1) {
-                if (sign == '+') {
-                    stack.push(num);
-                } else if (sign == '-') {
-                    stack.push(-num);
+            if((!Character.isDigit(ch) && ch != ' ' && ch != '(') || index[0] == chars.length - 1){
+                if(sign == '+'){
+                    st.push(num);
+                }
+                else if(sign == '-'){
+                    st.push(-num);
                 }
                 sign = ch;
-                num = 0;
+                num  = 0;
             }
 
-            if (ch == ')') {
-                break; // return control to the outer call
+            if(ch == ')'){
+                break;
             }
 
             index[0]++;
         }
 
-        // Sum up the values in the stack
         int sum = 0;
-        for (int val : stack) {
+        for(int val : st){
             sum += val;
         }
-
-        return sum;
+        return sum ;
     }
 }
