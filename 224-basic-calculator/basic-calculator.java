@@ -1,50 +1,49 @@
 class Solution {
     public int calculate(String s) {
-        int result = 0;
-        int sign = 1; // +1 or -1
-        Stack<Integer> stack = new Stack<>();
-        int i = 0;
+        return evaluate(s.toCharArray(), new int[]{0});
+    }
 
-        while (i < s.length()) {
-            char ch = s.charAt(i);
+    private int evaluate(char[] chars, int[] index) {
+        Stack<Integer> stack = new Stack<>();
+        int num = 0;
+        char sign = '+';
+
+        while (index[0] < chars.length) {
+            char ch = chars[index[0]];
 
             if (Character.isDigit(ch)) {
-                int num = 0;
-                // Build the full number (can be more than 1 digit)
-                while (i < s.length() && Character.isDigit(s.charAt(i))) {
-                    num = num * 10 + (s.charAt(i) - '0');
-                    i++;
+                num = num * 10 + (ch - '0');
+            }
+
+            if (ch == '(') {
+                index[0]++; // skip '('
+                num = evaluate(chars, index); // recursively evaluate the expression in parentheses
+            }
+
+            // Check for operator or end of expression
+            if ((!Character.isDigit(ch) && ch != ' ' && ch != '(') || index[0] == chars.length - 1) {
+                if (sign == '+') {
+                    stack.push(num);
+                } else if (sign == '-') {
+                    stack.push(-num);
                 }
-                result += sign * num;
-                continue; // Already moved i inside number parsing
+                sign = ch;
+                num = 0;
             }
 
-            else if (ch == '+') {
-                sign = 1;
-            } else if (ch == '-') {
-                sign = -1;
+            if (ch == ')') {
+                break; // return control to the outer call
             }
 
-            else if (ch == '(') {
-                // Push current result and sign onto the stack
-                stack.push(result);
-                stack.push(sign);
-                // Reset result and sign for inner expression
-                result = 0;
-                sign = 1;
-            }
-
-            else if (ch == ')') {
-                // Pop sign first, then previous result
-                int prevSign = stack.pop();
-                int prevResult = stack.pop();
-                result = prevResult + prevSign * result;
-            }
-
-            // Ignore spaces
-            i++;
+            index[0]++;
         }
 
-        return result;
+        // Sum up the values in the stack
+        int sum = 0;
+        for (int val : stack) {
+            sum += val;
+        }
+
+        return sum;
     }
 }
