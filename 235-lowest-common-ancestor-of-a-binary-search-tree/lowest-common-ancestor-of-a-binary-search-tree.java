@@ -27,15 +27,15 @@ class Solution {
             return rightAns;
         }
 
-        // if p in left subtrr of root node and q in the right subtrr 
-        if(p.val < root.val && q.val > root.val){
-            return root;
-        }
+        // // if p in left subtrr of root node and q in the right subtrr 
+        // if(p.val < root.val && q.val > root.val){
+        //     return root;
+        // }
 
-        // if q in left subtrr of root node and p in the right subtrr 
-        if(p.val > root.val && q.val < root.val){
-            return root;
-        }
+        // // if q in left subtrr of root node and p in the right subtrr 
+        // if(p.val > root.val && q.val < root.val){
+        //     return root;
+        // }
 
         return root;
     }
