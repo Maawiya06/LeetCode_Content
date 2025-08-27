@@ -22,7 +22,7 @@ class Solution {
         // Case 1: No left child
         if (curr.left == null) {
             ans.add(curr.val);
-            curr = curr.right; // ✅ go to right
+            curr = curr.right; 
         } 
         // Case 2: Has a left child
         else {
