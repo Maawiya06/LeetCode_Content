@@ -19,6 +19,37 @@ class Solution {
         dp[start][end] = ans;
         return dp[start][end];
     }
+    
+
+    int solveUsingTabulation(int[] arr, Map<String, Integer> maxi){
+        
+        int n = arr.length;
+
+        int[][] dp = new int[n + 2][n + 1];
+        for(int i = 0; i < n; i++){
+            Arrays.fill(dp[i], 0);
+        }
+
+        for(int start_index = n; start_index >= 0; start_index--){
+            for(int end_index = 0; end_index <= n - 1; end_index++){
+                  
+                if(start_index >= end_index){
+                    continue;
+                }
+
+                int ans = Integer.MAX_VALUE;
+                for (int i = start_index; i < end_index; i++) {
+                    ans = Math.min(ans,
+                            (maxi.get(start_index + "," + i) * maxi.get((i + 1) + "," + end_index))
+                                    + dp[start_index][i]
+                                    + dp[i + 1][end_index]);
+                }
+                dp[start_index][end_index] = ans;
+            }
+        }
+        return dp[0][n - 1];
+    }
+
 
     public int mctFromLeafValues(int[] arr) {
         Map<String, Integer> maxi = new HashMap<>();
@@ -38,6 +69,6 @@ class Solution {
         for(int i = 0; i < n; i++){
             Arrays.fill(dp[i], -1);
         }
-        return solve(arr, maxi, start, end, dp);
+        return solveUsingTabulation(arr, maxi);
     }
 }
