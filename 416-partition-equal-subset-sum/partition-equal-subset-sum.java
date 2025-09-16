@@ -20,6 +20,29 @@ class Solution {
         dp[index][sum] = (include || exclude) ? 1 : 0;
         return dp[index][sum] == 1;
     }
+    
+    boolean solveSpaceOptimization(int[] arr, int target) {
+    int n = arr.length;
+    boolean[] currRow = new boolean[target + 1];
+    boolean[] next = new boolean[target + 1];
+
+    currRow[target] = true;
+    next[target] = true;
+
+    for (int ind = n - 1; ind >= 0; ind--) {
+        for (int s = target; s >= 0; s--) {
+            boolean include = false;
+            if (s + arr[ind] <= target) {
+                include = next[s + arr[ind]];
+            }
+            boolean exclude = next[s];
+            currRow[s] = include || exclude;
+        }
+        // shifting
+        next = currRow.clone(); 
+    }
+    return next[0]; 
+}
 
     public boolean canPartition(int[] nums) {
         int index = 0;
@@ -40,7 +63,8 @@ class Solution {
         for(int j = 0; j <= nums.length; j++){
             Arrays.fill(dp[j], -1);
         }
-        boolean ans = solve(nums, index, currSum, target, dp);
+        // boolean ans = solve(nums, index, currSum, target, dp);
+        boolean ans = solveSpaceOptimization(nums, target);
         return ans;
     }
 }
