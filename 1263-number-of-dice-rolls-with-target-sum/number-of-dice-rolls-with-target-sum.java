@@ -20,12 +20,33 @@ class Solution {
         dp[n][target] = (int) ans;
         return dp[n][target];
     }
+    
+    int solveTabulation(int n, int k, int target) {
+        int[][] dp = new int[n + 1][target + 1];
 
+        // base case
+        dp[0][0] = 1;
+
+        for (int dice = 1; dice <= n; dice++) {
+            for (int sum = 1; sum <= target; sum++) {
+                long ans = 0;
+                for (int face = 1; face <= k; face++) {
+                    if (sum - face >= 0) {
+                        ans = (ans + dp[dice - 1][sum - face]) % MOD;
+                    }
+                }
+                dp[dice][sum] = (int) ans;
+            }
+        }
+
+        return dp[n][target];
+    }
     public int numRollsToTarget(int n, int k, int target) {
         int[][] dp = new int[n + 1][target + 1];
         for (int i = 0; i <= n; i++) {   
             Arrays.fill(dp[i], -1);
         }
-        return solve(n, k, target, dp);
+        // return solve(n, k, target, dp);
+        return solveTabulation(n, k, target);
     }
 }
