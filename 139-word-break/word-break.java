@@ -5,10 +5,10 @@ class Solution {
         }
         return false;
     }
-    boolean solve(String s, List<String> wordDict, int start, Boolean[] dp){
+    boolean solve(String s, List<String> wordDict, int start, int[] dp){
         if(start == s.length()) return true;
         
-        if(dp[start] != null) return dp[start];
+        if(dp[start] != -1) return dp[start] == 1;
 
         String word = "";
         boolean flag = false;
@@ -16,18 +16,16 @@ class Solution {
         for(int i = start; i < s.length(); i++){
             word += s.charAt(i);
             if(check(wordDict, word)){
-                if(solve(s, wordDict, i + 1, dp)){
-                    dp[start] = true;
-                    return dp[start];
-                }
+                flag = flag || solve(s, wordDict, i + 1, dp);
             }
         }
-        dp[start] = false;
-        return false;
+        dp[start] = flag ? 1 : 0;
+        return flag;
 
     }
     public boolean wordBreak(String s, List<String> wordDict) {
-        Boolean[] dp = new Boolean[s.length()];
+        int[] dp = new int[s.length()];
+        Arrays.fill(dp, -1);
         return solve(s, wordDict, 0, dp);
     }
 }
