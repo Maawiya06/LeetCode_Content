@@ -23,7 +23,23 @@ class Solution {
         return flag;
 
     }
+
+    // by using hashSet
+    boolean solve(String s, Set<String> set, int start, Boolean[] dp){
+        if(start == s.length()) return true;
+        if(dp[start] != null) return dp[start];
+
+        String word = "";
+        for(int i = start; i < s.length(); i++){
+            word += s.charAt(i);
+            if(set.contains(word) && solve(s, set, i + 1, dp)){
+                return dp[start] = true;
+            }
+        }
+        return dp[start] = false;
+    }
     public boolean wordBreak(String s, List<String> wordDict) {
+        Set<String> set = new HashSet<>(wordDict);
         int[] dp = new int[s.length()];
         Arrays.fill(dp, -1);
         return solve(s, wordDict, 0, dp);
