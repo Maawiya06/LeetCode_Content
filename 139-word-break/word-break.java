@@ -24,24 +24,33 @@ class Solution {
 
     }
 
-    // by using hashSet
-    boolean solve(String s, Set<String> set, int start, Boolean[] dp){
-        if(start == s.length()) return true;
-        if(dp[start] != null) return dp[start];
+    // by using BU
+    boolean solveBU(String s, List<String> wordDict){
+        int n = s.length();
+        boolean[] dp = new boolean[n + 1];
+        dp[n] = true; 
 
-        String word = "";
-        for(int i = start; i < s.length(); i++){
-            word += s.charAt(i);
-            if(set.contains(word) && solve(s, set, i + 1, dp)){
-                return dp[start] = true;
+        for(int start = n - 1; start >= 0; start--){
+            String word = "";
+            boolean flag = false;
+            for(int i = start; i < n; i++){
+                word += s.charAt(i);
+                if(check(wordDict, word) && dp[i + 1]){
+                    flag = true;
+                    break;
+                }
             }
+            dp[start] = flag;
         }
-        return dp[start] = false;
+        return dp[0];
     }
     public boolean wordBreak(String s, List<String> wordDict) {
-        Set<String> set = new HashSet<>(wordDict);
-        int[] dp = new int[s.length()];
-        Arrays.fill(dp, -1);
-        return solve(s, wordDict, 0, dp);
+        
+        // int[] dp = new int[s.length()];
+        // Arrays.fill(dp, -1);
+        // return solve(s, wordDict, 0, dp);
+
+       
+        return solveBU(s, wordDict);
     }
 }
