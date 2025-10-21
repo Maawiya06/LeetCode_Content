@@ -61,8 +61,8 @@ class Solution {
                 Arrays.fill(dp[i][j], -1);
             }
         }
-        // return solve(s1, s2, s3, 0, 0, 0, dp) == 1;
+        return solve(s1, s2, s3, 0, 0, 0, dp) == 1;
 
-        return solveBU(s1, s2, s3) == 1;
+        //return solveBU(s1, s2, s3) == 1;
     }
 }
