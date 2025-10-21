@@ -13,39 +13,61 @@ class Solution {
         }
         return dp[i][j][k] = flag;      
     }
-    
-    // solve by Bottom Up
-    int solveBU(String s1, String s2, String s3){
-        int n1 = s1.length(), n2 = s2.length(), n3 = s3.length();
-        
-        // initilize DP
-        int[][][] dp = new int[n1 + 1][n2 + 1][n3 + 1];
-        for(int i = 0; i <= n1; i++){
-            for(int j = 0; j <= n2; j++){
-                Arrays.fill(dp[i][j], 0);
+
+    // This is the corrected Bottom-Up (Tabulation) implementation.
+    public boolean solveBU(String s1, String s2, String s3) {
+        int n1 = s1.length();
+        int n2 = s2.length();
+        int n3 = s3.length();
+
+        if (n1 + n2 != n3) {
+            return false;
+        }
+
+        // dp[i][j] will be true if s1's first 'i' chars and s2's first 'j' chars
+        // can form an interleaving of s3's first 'i+j' chars.
+        boolean[][] dp = new boolean[n1 + 1][n2 + 1];
+
+        // Base Case: two empty strings can form one empty string.
+        dp[0][0] = true;
+
+        // Fill the first row (using only s1)
+        for (int i = 1; i <= n1; i++) {
+            if (s1.charAt(i - 1) == s3.charAt(i - 1) && dp[i - 1][0]) {
+                dp[i][0] = true;
             }
         }
 
-        // base case
-        dp[n1][n2][n3] = 1;
-        for(int i = n1; i >= 0; i--){
-            for(int j = n2; j >= 0; j--){
-                for(int k = n3; k >= 0; k--){
-                    if(i == s1.length() && j == s2.length() && k == s3.length()) continue;
+        // Fill the first column (using only s2)
+        for (int j = 1; j <= n2; j++) {
+            if (s2.charAt(j - 1) == s3.charAt(j - 1) && dp[0][j - 1]) {
+                dp[0][j] = true;
+            }
+        }
 
-                    int flag = 0;
-                    if(i < n1 && k < n3 && s1.charAt(i) == s3.charAt(k)){
-                        flag = flag | dp[i + 1][j][k + 1];
-                    }
-                    if(j < n2 && k < n3 && s2.charAt(j) == s3.charAt(k)){
-                        flag = flag | dp[i][j + 1][k + 1];
-                    }
-
-                    dp[i][j][k] = flag;
+        // Fill the rest of the DP table
+        for (int i = 1; i <= n1; i++) {
+            for (int j = 1; j <= n2; j++) {
+                int k = i + j; // This is the corresponding index in s3
+                
+                boolean matchS1 = false;
+                // Check if we can form the string by taking a char from s1
+                if (s1.charAt(i - 1) == s3.charAt(k - 1)) {
+                    matchS1 = dp[i - 1][j];
                 }
+
+                boolean matchS2 = false;
+                // Check if we can form the string by taking a char from s2
+                if (s2.charAt(j - 1) == s3.charAt(k - 1)) {
+                    matchS2 = dp[i][j - 1];
+                }
+
+                dp[i][j] = matchS1 || matchS2;
             }
         }
-        return dp[0][0][0];
+
+        // The final answer is in the bottom-right corner of the table
+        return dp[n1][n2];
     }
     public boolean isInterleave(String s1, String s2, String s3) {
 
@@ -61,8 +83,8 @@ class Solution {
                 Arrays.fill(dp[i][j], -1);
             }
         }
-        return solve(s1, s2, s3, 0, 0, 0, dp) == 1;
+        //return solve(s1, s2, s3, 0, 0, 0, dp) == 1;
 
-        //return solveBU(s1, s2, s3) == 1;
+        return solveBU(s1, s2, s3);
     }
 }
