@@ -1,17 +1,29 @@
+import java.util.Arrays;
+
 class Solution {
     private boolean check(int[] simNums, int curr, int startDir) {
         int n = simNums.length;
         int dir = startDir;
-
-        while (curr >= 0 && curr < n) {
+        int totalSum = 0;
+        for(int x : simNums) totalSum += x;
+        int maxSteps = simNums.length * totalSum + simNums.length * simNums.length + 1000;
+        int steps = 0;
+        while (curr >= 0 && curr < n && steps < maxSteps) {
+            steps++;
+            
             if (simNums[curr] == 0) {
+                
                 curr += dir;
             } else {
+                
                 simNums[curr]--;
+                
                 dir = -dir;
+                
                 curr += dir;
             }
         }
+        if (steps == maxSteps) return false;
         for (int val : simNums) {
             if (val != 0) {
                 return false;
@@ -29,7 +41,7 @@ class Solution {
                     validCount++;
                 }
                 int[] numsCopyRight = Arrays.copyOf(nums, n);
-                if (check(numsCopyRight, i, 1)) {
+                if (check(numsCopyRight, i, 1)) { 
                     validCount++;
                 }
             }
