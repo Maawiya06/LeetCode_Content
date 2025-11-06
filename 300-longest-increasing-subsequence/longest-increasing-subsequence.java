@@ -18,7 +18,7 @@ class Solution {
         return dp[curr][prev + 1];
     }
 
-
+    // solve by BinarySearch Approach
     int solveByBinarySearch(int[] nums) {
 
         List<Integer> ans = new ArrayList<>();
@@ -43,11 +43,12 @@ class Solution {
         int curr = 0;
         int prev = -1;
         int n = nums.length;
-        // int[][] dp = new int[n + 1][n + 1];
-        // for(int i = 0; i < n; i++){
-        //     Arrays.fill(dp[i], -1);
-        // }
-        int ans = solveByBinarySearch(nums);
+        int[][] dp = new int[n + 1][n + 1];
+        for(int i = 0; i < n; i++){
+            Arrays.fill(dp[i], -1);
+        }
+        // int ans = solveByBinarySearch(nums);
+        int ans = solve(nums, curr, prev, dp);
         return ans;
     }
 }
