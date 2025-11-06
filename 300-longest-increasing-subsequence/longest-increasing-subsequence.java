@@ -47,8 +47,8 @@ class Solution {
         for(int i = 0; i < n; i++){
             Arrays.fill(dp[i], -1);
         }
-        // int ans = solveByBinarySearch(nums);
-        int ans = solve(nums, curr, prev, dp);
+        int ans = solveByBinarySearch(nums);
+        // int ans = solve(nums, curr, prev, dp);
         return ans;
     }
 }
