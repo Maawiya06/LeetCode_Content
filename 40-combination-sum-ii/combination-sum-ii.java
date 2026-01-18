@@ -1,5 +1,6 @@
 class Solution {
-    void solve(int[] candidates, int target, int index, List<Integer> temp, List<List<Integer>> result){
+    void solve(int[] candidates, int target, 
+                        int index, List<Integer> temp, List<List<Integer>> result){
         if(target == 0){
             result.add(new ArrayList<>(temp));
             return;
@@ -23,9 +24,9 @@ class Solution {
     public List<List<Integer>> combinationSum2(int[] candidates, int target) {
         Arrays.sort(candidates);
         List<List<Integer>> result = new ArrayList<>();
-        List<Integer> temp = new ArrayList<>();
+        // List<Integer> temp = new ArrayList<>();
 
-        solve(candidates, target, 0, temp, result);
+        solve(candidates, target, 0, new ArrayList<>(), result);
         return result;
     }
 }
