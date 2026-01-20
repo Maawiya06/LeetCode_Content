@@ -10,13 +10,13 @@ class Solution {
         
         flag[i][j] = true;
 
-        if(
-            solve(board, word, flag, i + 1, j, index + 1)||
+        if( solve(board, word, flag, i + 1, j, index + 1)||
             solve(board, word, flag, i - 1, j, index + 1)||
             solve(board, word, flag, i, j + 1, index + 1)||
-            solve(board, word, flag, i, j - 1, index + 1))
+            solve(board, word, flag, i, j - 1, index + 1)
+            )
             {
-            return true;
+              return true;
             }
         
 
