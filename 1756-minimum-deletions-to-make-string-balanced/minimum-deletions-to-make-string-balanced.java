@@ -23,8 +23,22 @@ class Solution {
         return dp[index][Bcollect] = Math.min(delete, ans);
     }
     public int minimumDeletions(String s) {
-        int n = s.length();
-        Integer[][] dp = new Integer[n][2];
-        return solve(s, 0, 0, dp);
+        // int n = s.length();
+        // Integer[][] dp = new Integer[n][2];
+        // return solve(s, 0, 0, dp);
+
+        // greeedy solution
+        int delete = 0;
+        int countB = 0;
+
+        for(char found : s.toCharArray()){
+            if(found == 'b'){
+                countB++;
+            }
+            else{
+                delete = Math.min(delete + 1, countB);
+            }
+        }
+        return delete;
     }
 }
