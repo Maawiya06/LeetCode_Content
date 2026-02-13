@@ -4,7 +4,7 @@ class Solution {
         if(!ans.contains(endWord)) return 0;
 
         Queue<String> q = new LinkedList<>();
-        q.add(beginWord);
+        q.offer(beginWord);
 
         Set<String> visited = new HashSet<>();
         visited.add(beginWord);
@@ -24,7 +24,7 @@ class Solution {
 
                         String s = new String(arr);
                         if(ans.contains(s) && !visited.contains(s)){
-                            q.add(s);
+                            q.offer(s);
                             visited.add(s);
                         }
                     }
