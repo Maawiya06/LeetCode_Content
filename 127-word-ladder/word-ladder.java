@@ -30,7 +30,7 @@ class Solution {
                     }
                 }
             }
-            change++;
+            ++change;
         }
         return 0;
     }
