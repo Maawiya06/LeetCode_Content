@@ -1,11 +1,7 @@
 class Solution {
 
     // DFS to build paths
-    private void dfs(String word,
-                     String beginWord,
-                     Map<String, List<String>> parent,
-                     List<String> path,
-                     List<List<String>> result) {
+    private void dfs(String word, String beginWord, Map<String, List<String>> parent, List<String> path, List<List<String>> result) {
 
         if (word.equals(beginWord)) {
             List<String> temp = new ArrayList<>(path);
