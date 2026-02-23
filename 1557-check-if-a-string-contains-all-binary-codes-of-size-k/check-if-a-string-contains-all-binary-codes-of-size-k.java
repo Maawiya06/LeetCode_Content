@@ -9,7 +9,7 @@ class Solution {
         }));
     }
     public boolean hasAllCodes(String s, int k) {
-        HashSet<String> st = new HashSet<>();
+        Set<String> st = new HashSet<>();
         for(int i = 0; i <= s.length() - k; i++){
             st.add(s.substring(i, i + k));
         }
