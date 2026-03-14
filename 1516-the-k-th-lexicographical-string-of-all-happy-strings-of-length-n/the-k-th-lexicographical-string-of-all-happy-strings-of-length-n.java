@@ -1,36 +1,40 @@
 class Solution {
-    private Set<String> st;
+
+    private static char[] ALLOWED_LETTERS = { 'a', 'b', 'c' };
+
+    private int happyStringCount;
+    private String kthHappyString;
 
     public String getHappyString(int n, int k) {
-        st = new TreeSet<>();
-
-        find("", n);
-
-        if (st.size() < k) return "";
-
-        int idx = 0;
-        for (String str : st) {
-            if (idx == k - 1) {
-                return str;
-            }
-            idx++;
-        }
-
-        return "";
+        this.happyStringCount = 0;
+        this.kthHappyString = "";
+        kthHappyStringHelper(new StringBuilder(), n, k);
+        return happyStringCount >= k ? kthHappyString : "";
     }
 
-    private void find(String str, int n) {
+    private void kthHappyStringHelper(StringBuilder currStr, int n, int k) {
 
-        if (str.length() == n) {
-            st.add(str);
+        int currStrSize = currStr.length();
+
+        if (currStrSize == n) {
+            happyStringCount++;
+            if (happyStringCount == k) {
+                kthHappyString = currStr.toString();
+            }
             return;
         }
 
-        for (char ch = 'a'; ch <= 'c'; ch++) {
+        for (char c : ALLOWED_LETTERS) {
 
-            if (str.length() == 0 || ch != str.charAt(str.length() - 1)) {
-                find(str + ch, n);
-            }
+            if (currStrSize > 0 && c == currStr.charAt(currStrSize - 1))
+                continue;
+
+            currStr.append(c);
+            kthHappyStringHelper(currStr, n, k);
+            currStr.deleteCharAt(currStrSize);
+
+            if (happyStringCount == k)
+                return;
         }
     }
 }
