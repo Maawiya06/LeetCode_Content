@@ -1,5 +1,4 @@
 class Solution {
-
     private boolean solve(long a, long b, int i, String num, int count){
         if(i == num.length()) return count >= 3;
 
@@ -7,9 +6,9 @@ class Solution {
         long curr = 0;
 
         for(int index = i; index < num.length(); index++){
-
+            // cheak leading zero for recursive number
             if (num.charAt(i) == '0' && index > i) break;
-            
+
             curr = curr * 10 + (num.charAt(index) - '0');
 
             if(curr == sum){
