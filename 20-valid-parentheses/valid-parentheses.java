@@ -1,5 +1,3 @@
-import java.util.Stack;
-
 class Solution {
     public boolean isValid(String s) {
         Stack<Character> st = new Stack<>();
