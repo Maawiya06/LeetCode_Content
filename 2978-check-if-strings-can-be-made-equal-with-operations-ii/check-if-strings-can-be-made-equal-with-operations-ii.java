@@ -9,7 +9,8 @@ class Solution {
             if(i % 2 == 0){
                 even1.add(s1.charAt(i));
                 even2.add(s2.charAt(i));
-            } else {
+            }
+            else{
                 odd1.add(s1.charAt(i));
                 odd2.add(s2.charAt(i));
             }
